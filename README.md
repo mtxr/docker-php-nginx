@@ -1,7 +1,6 @@
 # PHP + Nginx docker image
 
-[![](https://images.microbadger.com/badges/image/mtxr/docker-php-nginx:alpine.svg)](https://microbadger.com/images/mtxr/docker-php-nginx:alpine "Get your own image badge on microbadger.com")
-[![](https://images.microbadger.com/badges/version/mtxr/docker-php-nginx:alpine.svg)](https://microbadger.com/images/mtxr/docker-php-nginx:alpine "Get your own image badge on microbadger.com")
+[![](https://images.microbadger.com/badges/image/mtxr/docker-php-nginx:alpine.svg)](https://microbadger.com/images/mtxr/docker-php-nginx:alpine "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/mtxr/docker-php-nginx:alpine.svg)](https://microbadger.com/images/mtxr/docker-php-nginx:alpine "Get your own image badge on microbadger.com")
 
 Minimal nginx + PHP7 image based on [Alpine Linux](https://hub.docker.com/_/alpine/).
 
