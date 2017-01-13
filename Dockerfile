@@ -4,7 +4,7 @@ MAINTAINER Matheus Teixeira <me@mteixeira.me>
 ARG HOST_USER
 ENV HOST_USER ${HOST_USER:-"user"}
 
-ARG INTALL_PACKAGES=""
+ARG INSTALL_PACKAGES
 
 ARG APK_REPOSITORIES="http://dl-cdn.alpinelinux.org/alpine/edge/community"
 
@@ -24,7 +24,7 @@ RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repo
       php7-mbstring \
       php7-json \
       nginx \
-      supervisor $INTALL_PACKAGES
+      supervisor $INSTALL_PACKAGES
 
 # addgroup info
 #         -g Group id
