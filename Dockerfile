@@ -59,7 +59,7 @@ COPY ./files/supervisor/init.d/* /autostart/
 # Add application
 WORKDIR /www
 
-# VOLUME ["/www"]
+VOLUME /www
 
 EXPOSE 80 443 9000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
