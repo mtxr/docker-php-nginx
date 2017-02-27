@@ -4,6 +4,9 @@ MAINTAINER Matheus Teixeira <me@mteixeira.me>
 ARG HOST_USER
 ENV HOST_USER ${HOST_USER:-"user"}
 
+ARG HOST_UID
+ENV HOST_UID ${HOST_UID:-1000}
+
 ARG INSTALL_PACKAGES
 
 ARG APK_REPOSITORIES="http://dl-cdn.alpinelinux.org/alpine/edge/community"
@@ -35,7 +38,8 @@ RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repo
 #         -D      Don't assign a password
 #         -u UID      User id
 
-RUN addgroup -g 1000 $HOST_USER && adduser -s /bin/bash -D -u 1000 -G $HOST_USER $HOST_USER && \
+RUN echo "Creating user '$HOST_USER' with id '$HOST_UID'"
+RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/bash -D -u $HOST_UID -G $HOST_USER $HOST_USER && \
     ln -s /usr/bin/php7 /usr/bin/php && \
     rm -rf /var/cache/apk/* && \
     mkdir -p /www /etc/nginx/sites-available /autostart/ && \

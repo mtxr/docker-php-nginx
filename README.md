@@ -12,11 +12,12 @@ You can easily build you docker image with some tunnings. Clone this repository 
 
 With args:
 
-`docker build --build-arg HOST_USER=mtxr -t my_image_name`
+`docker build --build-arg HOST_USER=mtxr HOST_UID=$UID -t my_image_name`
 
 | Arguments | Usage | Default |
 |---|---|---|
 | `HOST_USER` | Setup the user (besides root). Eg. ls -hal will show this name for mounted volumes instead of 1000 | `user` |
+| `HOST_UID` | Setup the user id for $HOST_USER. | `1000` |
 | `INSTALL_PACKAGES` | Add alpine packages to the build. Eg. `php7-iconv php7-gd php7-gdm` | `""` |
 | `APK_REPOSITORIES` | Url's to alpine repositories separed by `\n` | http://dl-cdn.alpinelinux.org/alpine/edge/community |
 
