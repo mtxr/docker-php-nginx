@@ -38,19 +38,19 @@ RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repo
 #         -D      Don't assign a password
 #         -u UID      User id
 
-RUN echo "Creating user '$HOST_USER' with id '$HOST_UID'"
+RUN echo "Creating user '${HOST_USER}' with id '${HOST_UID}'"
 RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $HOST_USER $HOST_USER && \
     ln -s /usr/bin/php7 /usr/bin/php && \
     rm -rf /var/cache/apk/* && \
     mkdir -p /www /etc/nginx/sites-available /autostart/ && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php7/php.ini && \
     sed -i 's/; sys_temp_dir = .*/sys_temp_dir = "\/tmp"/' /etc/php7/php.ini && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    echo "<?php phpinfo(); ?>" > /www/index.php
+    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Configure nginx
 COPY ./files/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY ./files/nginx/default_server.conf /etc/nginx/sites-available/default.conf
+COPY ./files/nginx/default_server.conf /sites/default.conf
+COPY ./files/www/* /www/
 
 # Configure PHP-FPM
 COPY ./files/php/php-fpm.conf /etc/php7/php-fpm.conf
@@ -64,9 +64,6 @@ COPY ./files/supervisor/init.d/* /autostart/
 WORKDIR /www
 
 VOLUME /www
-
-RUN adduser -s /bin/sh -D -u 82 -G www-data www-data
-RUN chown www-data:www-data /www -R
 
 EXPOSE 80 443 9000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -37,7 +37,8 @@ Voilà!
 | Description | Path |
 |---|---|
 | Public website | `/www/` |
-| Nginx default server | `/etc/nginx/sites-available/default.conf` |
+| Nginx default server | `/sites/default.conf` |
+| Nginx servers | `/sites/*` |
 | Supervisor auto start | `/autostart/*` |
 | PHP-FPM Pools | `/etc/php7/php-fpm.d/*` |
 
