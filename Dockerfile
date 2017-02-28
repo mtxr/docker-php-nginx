@@ -39,7 +39,7 @@ RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repo
 #         -u UID      User id
 
 RUN echo "Creating user '$HOST_USER' with id '$HOST_UID'"
-RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/bash -D -u $HOST_UID -G $HOST_USER $HOST_USER && \
+RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $HOST_USER $HOST_USER && \
     ln -s /usr/bin/php7 /usr/bin/php && \
     rm -rf /var/cache/apk/* && \
     mkdir -p /www /etc/nginx/sites-available /autostart/ && \
@@ -64,6 +64,9 @@ COPY ./files/supervisor/init.d/* /autostart/
 WORKDIR /www
 
 VOLUME /www
+
+RUN adduser -s /bin/sh -D -u 82 -G www-data www-data
+RUN chown www-data:www-data /www -R
 
 EXPOSE 80 443 9000
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
