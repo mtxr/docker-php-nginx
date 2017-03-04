@@ -47,6 +47,9 @@ RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $H
     sed -i 's/; sys_temp_dir = .*/sys_temp_dir = "\/tmp"/' /etc/php7/php.ini && \
     curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# support for parallel installs. Faster composer.
+RUN composer global require hirak/prestissimo
+
 # Configure nginx
 COPY ./files/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ./files/nginx/default_server.conf /sites/default.conf
