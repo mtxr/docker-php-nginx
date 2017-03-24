@@ -20,6 +20,7 @@ RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repo
       curl \
       php7 \
       php7-curl \
+      php7-pecl \
       php7-fpm \
       php7-openssl \
       php7-phar \
