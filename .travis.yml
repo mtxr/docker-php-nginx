@@ -13,3 +13,4 @@ jobs:
     - stage: build and test docker image
       script:
       - ./.ci/build-test-push.sh
+      after_success: ./.ci/merge.sh $GIT_USERNAME $GIT_TOKEN
