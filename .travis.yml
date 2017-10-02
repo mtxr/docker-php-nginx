@@ -1,19 +1,23 @@
-sudo: required
-
-services:
-  - docker
-
-language: php
+sudo: true
+dist: trusty
 
 env:
   global:
+    - REPO="${DOCKER_USER}/docker-php-nginx"
     - COMMIT=${TRAVIS_COMMIT::8}
 
-after_success:
-  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - export REPO=mtxr/docker-php-nginx
-  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
-  - docker build -f Dockerfile -t $REPO:$COMMIT .
-  - docker tag $REPO:$COMMIT $REPO:$TAG
-  - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
-  - docker push $REPO
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - docker build -t $REPO:$COMMIT .
+      - docker images
+    - stage: test
+      script: docker run --rm $REPO:$COMMIT cat /www/index.html
+    - stage: push
+      script:
+      - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+      - docker tag $REPO:$COMMIT $REPO:$TAG
+      - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
+      - docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+      - docker push $REPO
