@@ -8,7 +8,7 @@ docker run --name ${REPO//[^[:alnum:]]/} -d -p 8888:80 --rm $REPO:$COMMIT /usr/b
 sleep 5 && \
 curl "http://localhost:8888/" && \
 docker rm -f ${REPO//[^[:alnum:]]/} && \
-echo docker tag $REPO:$COMMIT $REPO:$TAG && \
-echo docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER && \
+docker tag $REPO:$COMMIT $REPO:$TAG && \
+docker tag $REPO:$COMMIT $REPO:$TAG-v$TRAVIS_BUILD_NUMBER && \
 docker login -u="$DOCKER_USER" -p="$DOCKER_PASS" && \
 docker push $REPO
