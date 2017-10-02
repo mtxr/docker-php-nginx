@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.6
 LABEL maintainer="Matheus Teixeira <me@mteixeira.me>"
 
 ARG HOST_USER
@@ -41,7 +41,7 @@ RUN echo -e "${APK_REPOSITORIES}" >> /etc/apk/repositories && \
 
 RUN echo "Creating user '${HOST_USER}' with id '${HOST_UID}'"
 RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $HOST_USER $HOST_USER && \
-    ln -s /usr/bin/php7 /usr/bin/php && \
+    ln -snf /usr/bin/php7 /usr/bin/php && \
     rm -rf /var/cache/apk/* && \
     mkdir -p /www /etc/nginx/sites-available /autostart/ && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php7/php.ini && \
