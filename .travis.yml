@@ -8,12 +8,11 @@ env:
 
 jobs:
   include:
-    - stage: build docker image
+    - stage: build and test docker image
       script:
       - docker build -t $REPO:$COMMIT .
       - docker images
-    - stage: test
-      script: docker run --rm $REPO:$COMMIT cat /www/index.html
+      - docker run --rm $REPO:$COMMIT cat /www/index.html
     - stage: push
       script:
       - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
