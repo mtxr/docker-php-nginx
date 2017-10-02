@@ -1,5 +1,5 @@
 FROM alpine:latest
-MAINTAINER Matheus Teixeira <me@mteixeira.me>
+LABEL maintainer="Matheus Teixeira <me@mteixeira.me>"
 
 ARG HOST_USER
 ENV HOST_USER ${HOST_USER:-"user"}
@@ -9,18 +9,18 @@ ENV HOST_UID ${HOST_UID:-1000}
 
 ARG INSTALL_PACKAGES
 
-ARG APK_REPOSITORIES="http://dl-cdn.alpinelinux.org/alpine/edge/community"
+ARG APK_REPOSITORIES
+ENV APK_REPOSITORIES ${APK_REPOSITORIES:-""}
 
 ENV TERM=xterm
 # Install packages
-RUN echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-    echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
-    echo -e "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+RUN echo -e "${APK_REPOSITORIES}" >> /etc/apk/repositories && \
+    cat /etc/apk/repositories && \
     apk --update add \
       curl \
       php7 \
       php7-curl \
-      php7-pecl \
+    #   php7-pecl \
       php7-fpm \
       php7-openssl \
       php7-phar \
@@ -46,8 +46,7 @@ RUN addgroup -g $HOST_UID $HOST_USER && adduser -s /bin/sh -D -u $HOST_UID -G $H
     mkdir -p /www /etc/nginx/sites-available /autostart/ && \
     sed -i "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/" /etc/php7/php.ini && \
     sed -i 's/; sys_temp_dir = .*/sys_temp_dir = "\/tmp"/' /etc/php7/php.ini && \
-    curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && \
-    /usr/local/bin/composer global require hirak/prestissimo
+    curl -sS https://getcomposer.org/installer | /usr/bin/php -- --install-dir=/usr/local/bin --filename=composer
 
 # support for parallel installs. Faster composer.
 RUN composer global require hirak/prestissimo
