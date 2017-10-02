@@ -9,7 +9,7 @@ sleep 5 && \
 curl "http://localhost:8888/" && \
 docker rm -f ${REPO//[^[:alnum:]]/} && \
 docker tag $REPO:$COMMIT $REPO:$TAG && \
-(([ "$TAG" == "latest" ] && echo "Publishing latest..." ) || docker tag $REPO:$COMMIT $REPO:$TAG-v$TRAVIS_BUILD_NUMBER) && \
+( ( [ "$TAG" == "latest" ] && echo "Publishing latest..." ) || docker tag $REPO:$COMMIT $REPO:$TAG-v$TRAVIS_BUILD_NUMBER ) && \
 docker rmi $REPO:$COMMIT && \
 docker login -u="$DOCKER_USER" -p="$DOCKER_PASS" && \
 docker push $REPO
