@@ -1,7 +1,7 @@
 #! /bin/bash
 # Slightly modified from https://github.com/brollb/automerge-ci
 
-export GIT_COMMITTER_EMAIL='travis@travis-ci.org'
+export GIT_COMMITTER_EMAIL='travis@travis'
 export GIT_COMMITTER_NAME='Travis CI'
 # Merge pushes to development branch to stable branch
 if [ ! -n $2 ] ; then
