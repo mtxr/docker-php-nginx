@@ -23,7 +23,6 @@ echo "current branch is '$CURRENT_BRANCH'"
 
 # Create the URL to push merge to
 URL=$(git remote -v | head -n1 | cut -f2 | cut -d" " -f1)
-URL=https://github.com/secure/docker-php-nginx.git
 echo "Repo url is $URL"
 PUSH_URL="https://$GIT_USER:$GIT_TOKEN@$(echo $URL | sed -E 's#^([a-z]+://)##g')"
 
