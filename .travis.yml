@@ -1,6 +1,8 @@
 sudo: true
 dist: trusty
 
+language: bash
+
 env:
   global:
     - REPO="${DOCKER_USER}/docker-php-nginx"
@@ -12,9 +14,8 @@ jobs:
       script:
       - docker build -t $REPO:$COMMIT .
       - docker images
-      - docker run --rm $REPO:$COMMIT cat /www/index.html
-    - stage: push
-      script:
+      - docker run -d -p 8888:80 -rm $REPO:$COMMIT /bin/sh
+      - curl "http://localhost:8888/"
       - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
       - docker tag $REPO:$COMMIT $REPO:$TAG
       - docker tag $REPO:$COMMIT $REPO:$TRAVIS_BUILD_NUMBER
