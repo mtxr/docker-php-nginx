@@ -19,7 +19,7 @@ With args:
 | `HOST_USER` | Setup the user (besides root). Eg. ls -hal will show this name for mounted volumes instead of 1000 | `user` |
 | `HOST_UID` | Setup the user id for $HOST_USER. | `1000` |
 | `INSTALL_PACKAGES` | Add alpine packages to the build. Eg. `php7-iconv php7-gd php7-gdm` | `""` |
-| `APK_REPOSITORIES` | Url's to alpine repositories separed by `\n` | http://dl-cdn.alpinelinux.org/alpine/edge/community |
+| `APK_REPOSITORIES` | Url's to alpine repositories separed by `\n` | `""` |
 
 
 ## Running
@@ -28,7 +28,7 @@ On your terminal:
 
 `docker run -p 80:80 -it my_iamge_name /bin/sh` or `docker run -d -p 80:80 -it my_iamge_name /bin/sh` to run as daemon.
 
-Open your browser and navigate to `http://localhost`. 
+Open your browser and navigate to `http://localhost`.
 
 Voilà!
 
