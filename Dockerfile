@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.11
 LABEL maintainer="Matheus Teixeira <me@mteixeira.me>"
 
 ARG HOST_USER
